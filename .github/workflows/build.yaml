@@ -30,7 +30,7 @@ jobs:
         id: docker_metadata
         uses: docker/metadata-action@v3
         with:
-          images: ${{ github.repository }},ghcr.io/${{ github.repository }}
+          images: ${{ github.repository }},ghcr.io/${{ github.actor }}/nginx-with-substitutions-filter
           tags: |
             type=sha
             type=ref,event=tag
