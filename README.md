@@ -16,10 +16,10 @@ Available on [DockerHub][DockerHub] and on [GitHub container registry][GHCR]:
 ```sh
 docker pull tofran/nginx-with-substitutions-filter
 # or
-docker pull ghcr.io/tofran/nginx-with-substitutions-filter-docker
+docker pull ghcr.io/tofran/nginx-with-substitutions-filter
 ```
 
 This repo could also be helpful as a recipe for building images with any other dynamic modules, or even as way to extract compiled binaries from them.
 
 [DockerHub]: https://hub.docker.com/r/tofran/nginx-with-substitutions-filter
-[GHCR]: https://github.com/tofran/nginx-with-substitutions-filter-docker/pkgs/container/nginx-with-substitutions-filter-docker
+[GHCR]: https://github.com/tofran/nginx-with-substitutions-filter-docker/pkgs/container/nginx-with-substitutions-filter

@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Every monday at 12am utc
+    - cron:  "0 12 * * 1"
   workflow_dispatch:
 
 jobs:
@@ -30,7 +33,9 @@ jobs:
         id: docker_metadata
         uses: docker/metadata-action@v3
         with:
-          images: ${{ github.repository }},ghcr.io/${{ github.actor }}/nginx-with-substitutions-filter
+          images: >-
+            ${{ github.actor }}/nginx-with-substitutions-filter,
+            ghcr.io/${{ github.actor }}/nginx-with-substitutions-filter
           tags: |
             type=sha
             type=ref,event=tag
