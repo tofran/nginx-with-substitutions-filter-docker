@@ -17,9 +17,8 @@ RUN apk add --no-cache --virtual .build-deps \
       libxslt-dev \
       linux-headers \
       make \
-      mercurial \
       openssl-dev \
-      pcre-dev \
+      pcre2-dev \
       perl-dev \
       zlib-dev
 
@@ -31,7 +30,7 @@ RUN mkdir -p /usr/src \
     && rm nginx.tar.gz \
     && rm nginx_substitutions_filter.tar.gz \
     && cd /usr/src/nginx-$NGINX_VERSION \
-    && bash -c 'eval ./configure $(nginx -V 2>&1 | sed -n -e "s/^.*configure arguments: //p") --add-dynamic-module=/usr/src/ngx_http_substitutions_filter_module-master' \
+    && bash -c 'set -eux && eval ./configure $(nginx -V 2>&1 | sed -n -e "s/^.*configure arguments: //p") --add-dynamic-module=/usr/src/ngx_http_substitutions_filter_module-master' \
     && make \
     && make install
 
