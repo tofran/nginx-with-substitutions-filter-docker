@@ -8,13 +8,14 @@ on:
     # Every monday at 12am utc
     - cron:  "0 12 * * 1"
   workflow_dispatch:
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -29,6 +30,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Docker metadata
         id: docker_metadata
         uses: docker/metadata-action@v3
@@ -39,6 +47,10 @@ jobs:
           tags: |
             type=sha
             type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=schedule
           flavor: |
             latest=true
 
@@ -48,5 +60,7 @@ jobs:
         with:
           context: ./
           file: ./Dockerfile
-          push: true
+          platforms: linux/386, linux/amd64, linux/arm/v6, linux/arm/v7, linux/arm64/v8, linux/ppc64le, linux/s390x
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_metadata.outputs.tags }}
+          labels: ${{ steps.docker_metadata.outputs.labels }}
