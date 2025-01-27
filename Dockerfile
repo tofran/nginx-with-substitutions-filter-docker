@@ -1,8 +1,6 @@
 # Based on: https://gist.github.com/hermanbanken/96f0ff298c162a522ddbba44cad31081
 
-FROM nginx:alpine AS builder
-
-LABEL org.opencontainers.image.source https://github.com/tofran/nginx-with-substitutions-filter-docker
+FROM nginx:1.27-alpine-slim AS builder
 
 # For latest build deps, see https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile
 RUN apk add --no-cache --virtual .build-deps \
