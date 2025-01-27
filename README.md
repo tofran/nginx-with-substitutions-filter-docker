@@ -24,3 +24,37 @@ This repo could also be helpful as a recipe for building images with any other d
 
 [DockerHub]: https://hub.docker.com/r/tofran/nginx-with-substitutions-filter
 [GHCR]: https://github.com/tofran/nginx-with-substitutions-filter-docker/pkgs/container/nginx-with-substitutions-filter
+
+
+## Example usage
+
+Create the following example configuration `./sample.conf`:
+
+```nginx
+server {
+    listen 80;
+
+    location / {
+        subs_filter_types text/html text/css text/xml application/javascript;
+        subs_filter "nginx" "replaced";
+        root /usr/share/nginx/html;
+    }
+}
+```
+
+Now run the image:
+
+```sh
+docker run -p 8080:80 -v ./sample.conf:/etc/nginx/conf.d/default.conf tofran/nginx-with-substitutions-filter
+```
+
+Visit `http://localhost:8080`:
+
+![screenshot](https://github.com/user-attachments/assets/3ab17364-e517-4562-8727-2cf28b55c850)
+
+There you go, you now have a nginx running with on-the-fly string replacement.
+Happy replacing!
+
+## License
+
+MIT
