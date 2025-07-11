@@ -70,6 +70,7 @@ jobs:
           file: ./Dockerfile
           platforms: ${{ env.TARGET_PLATFORMS }}
           push: false
+          load: true
           tags: nginx-with-substitutions-filter:github-actions-test
           cache-from: type=gha
           cache-to: type=gha,mode=max
