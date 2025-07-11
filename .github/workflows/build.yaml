@@ -63,12 +63,12 @@ jobs:
           flavor: |
             latest=true
 
-      - name: Build
+      - name: Build test image
         uses: docker/build-push-action@v6
         with:
           context: ./
           file: ./Dockerfile
-          platforms: ${{ env.TARGET_PLATFORMS }}
+          platforms: linux/amd64
           push: false
           load: true
           tags: nginx-with-substitutions-filter:github-actions-test
@@ -79,7 +79,7 @@ jobs:
         run: |
           ./test.sh nginx-with-substitutions-filter:github-actions-test
 
-      - name: Push
+      - name: Build & Push
         uses: docker/build-push-action@v6
         with:
           context: ./
