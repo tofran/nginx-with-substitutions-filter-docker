@@ -73,7 +73,9 @@ jobs:
           load: true
           tags: nginx-with-substitutions-filter:github-actions-test
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: |
+            type=local,dest=${{ runner.temp }}/buildx-local-cache
+            type=gha,mode=max
 
       - name: Test
         run: |
@@ -88,5 +90,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
           tags: ${{ steps.docker_metadata.outputs.tags }}
           labels: ${{ steps.docker_metadata.outputs.labels }}
-          cache-from: type=gha
+          cache-from: |
+            type=local,src=${{ runner.temp }}/buildx-local-cache
+            type=gha
           cache-to: type=gha,mode=max
